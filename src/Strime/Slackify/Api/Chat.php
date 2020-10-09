@@ -11,6 +11,7 @@
 
 namespace Strime\Slackify\Api;
 
+use Jeremeamia\Slack\BlockKit\Surfaces\Message;
 use Strime\Slackify\Exception\RuntimeException;
 use Strime\Slackify\Exception\InvalidArgumentException;
 use GuzzleHttp\Exception\RequestException;
@@ -133,7 +134,7 @@ class Chat extends AbstractApi
      */
     public function postMessage($channel, $text, $parse = "none", $link_names = 1, $attachments = NULL,
         $unfurl_links = TRUE, $unfurl_media = FALSE, $username = NULL, $as_user = TRUE, $icon_url = NULL,
-        $icon_emoji = NULL, $thread_ts = NULL, $reply_broadcast = TRUE) {
+        $icon_emoji = NULL, $thread_ts = NULL, $reply_broadcast = TRUE, $blocks = '') {
 
         // Check if the type of the variables is valid.
         if (!is_string($channel)) {
@@ -175,6 +176,9 @@ class Chat extends AbstractApi
         if (!is_bool($reply_broadcast)) {
             throw new InvalidArgumentException("The type of the reply_broadcast variable is not valid.");
         }
+        if(!is_string($blocks)) {
+            throw new \InvalidArgumentException("The type of the blocks variable is not valid.");
+        }
 
         // Set the arguments of the request
         $arguments = array(
@@ -185,7 +189,8 @@ class Chat extends AbstractApi
             "unfurl_links" => $unfurl_links,
             "unfurl_media" => $unfurl_media,
             "as_user" => $as_user,
-            "reply_broadcast" => $reply_broadcast
+            "reply_broadcast" => $reply_broadcast,
+            "blocks" => $blocks,
         );
 
         if($attachments != NULL) {
