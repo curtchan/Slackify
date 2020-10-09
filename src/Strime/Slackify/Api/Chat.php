@@ -188,10 +188,16 @@ class Chat extends AbstractApi
             "link_names" => $link_names,
             "unfurl_links" => $unfurl_links,
             "unfurl_media" => $unfurl_media,
-            "as_user" => $as_user,
-            "reply_broadcast" => $reply_broadcast,
             "blocks" => $blocks,
         );
+        
+        if($as_user) {
+            $arguments['as_user'] = true;
+        }
+        
+        if($reply_broadcast) {
+            $arguments['reply_broadcast'] = $reply_broadcast;
+        }
 
         if($attachments != NULL) {
             $arguments["attachments"] = $attachments;
