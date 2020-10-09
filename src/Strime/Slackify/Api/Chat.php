@@ -188,7 +188,6 @@ class Chat extends AbstractApi
             "link_names" => $link_names,
             "unfurl_links" => $unfurl_links,
             "unfurl_media" => $unfurl_media,
-            "blocks" => $blocks,
         );
         
         if($as_user) {
@@ -213,6 +212,9 @@ class Chat extends AbstractApi
         }
         if($thread_ts != NULL) {
             $arguments["thread_ts"] = (string)$thread_ts;
+        }
+        if($blocks) {
+            $arguments['blocks'] = $blocks;
         }
 
         $this->setUrl("chat.postMessage", $arguments);
